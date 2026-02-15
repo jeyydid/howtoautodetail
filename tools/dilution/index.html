@@ -181,7 +181,7 @@
     // Number formatter for inputs and outputs
     const formatter = new Intl.NumberFormat("en-GB", {
       minimumFractionDigits: 0,
-      maximumFractionDigits: 2
+      maximumFractionDigits: 0
     });
 
     function formatNumber(value) {
@@ -234,10 +234,10 @@
 
       // Populate Ratio column
       document.getElementById("concentrate_ratio").textContent =
-        formatNumber(concentrate.toFixed(2));
+        formatNumber(Math.round(concentrate));
 
       document.getElementById("water_ratio").textContent =
-        formatNumber(water.toFixed(2));
+        formatNumber(Math.round(water));
 
       // Populate Factor column
       document.getElementById("concentrate_factor").textContent =
