@@ -54,7 +54,7 @@
       gap: 1rem;
       padding: 0.4rem 0;
       border-bottom: 1px solid rgba(229,231,235,0.8);
-      align-items: center;
+      align-items: right;
     }
     .result-row:last-child {
       border-bottom: none;
@@ -66,6 +66,11 @@
     .result-label {
       color: var(--muted);
       font-weight: 700;
+    }
+    .result-header {
+      color: var(--muted);
+      font-weight: 700;
+      text-align: right;
     }
     .error {
       margin-top: 0.9rem;
@@ -129,7 +134,7 @@
 
             <div>
               <label for="finalVolume">Final Volume (ml)</label>
-              <input type="text" id="finalVolume" inputmode="numeric" pattern="[0-9,]*">
+              <input type="text" id="finalVolume" inputmode="numeric" pattern="[0-9,]*" placeholder="2,500">
             </div>
 
             <div class="actions">
@@ -140,10 +145,10 @@
             <div class="error" id="error" aria-live="polite"></div>
 
             <div class="results" id="results" aria-live="polite">
-              <div class="result-row" style="font-weight:800;">
+              <div class="result-row">
                 <div></div>
-                <div>Ratio</div>
-                <div>Factor</div>
+                <div class="result-header">Ratio</div>
+                <div class="result-header">Factor</div>
               </div>
 
               <div class="result-row">
@@ -159,9 +164,6 @@
               </div>
             </div>
 
-        <div class="card-footer">
-          <span class="pill">No tracking • Offline-friendly</span>
-        </div>
       </article>
     </section>
   </main>
