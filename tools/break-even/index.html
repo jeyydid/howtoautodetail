@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Break-Even Calculator • Tool Suite</title>
-  <meta name="description" content="Detailing business break-even calculator for pricing, profit, and job volume planning." />
+  <title>Detailing Break-Even Calculator • Tool Suite</title>
+  <meta name="description" content="Work out break-even price per job, jobs per month, profit and effective hourly rate for your detailing business." />
   <link rel="stylesheet" href="../../assets/styles.css" />
 </head>
 
@@ -23,81 +23,100 @@
 
       <nav class="top-nav" aria-label="Primary">
         <a class="nav-link" href="index.html" aria-current="page">Home</a>
+        <a class="nav-link" href="https://howtoautodetail.com/" rel="noopener noreferrer">HTAD Wiki</a>
       </nav>
     </div>
   </header>
 
   <main class="container">
+    <!-- Tool card -->
     <section class="tool-card">
       <div class="tool-card__header">
         <h1>Detailing Business Break-Even Calculator</h1>
         <p class="muted">
-          Plan pricing and workload using monthly overheads, per-job costs, and your time. No data leaves your browser.
+          Price smarter by modelling <strong>fixed monthly overheads</strong>, <strong>per-job costs</strong>, and <strong>time</strong>.
+          Runs entirely in your browser.
         </p>
       </div>
 
+      <!-- Tool layout: Inputs + Results (consistent with a suite theme) -->
       <div class="tool-grid">
         <!-- Inputs -->
         <form class="tool-form" id="be-form" autocomplete="off">
-          <h2 class="tool-card__subhead">Inputs</h2>
+          <div class="tool-form__section">
+            <h2 class="tool-card__subhead">Inputs</h2>
+            <p class="muted">
+              Fill in realistic averages. If you do multiple service types, treat this as your “typical job” baseline.
+            </p>
 
-          <div class="form-grid">
-            <div class="input-group">
-              <label for="currency">Currency symbol</label>
-              <input id="currency" type="text" value="£" maxlength="3" />
-              <small class="help">Just for display (e.g. £, $, €).</small>
+            <div class="form-grid">
+              <div class="input-group">
+                <label for="currency">Currency symbol</label>
+                <input id="currency" type="text" value="£" maxlength="3" inputmode="text" />
+                <small class="help">Display only (e.g. £, $, €).</small>
+              </div>
+
+              <div class="input-group">
+                <label for="fixed">Monthly fixed costs</label>
+                <input id="fixed" type="number" min="0" step="0.01" value="300" inputmode="decimal" />
+                <small class="help">Insurance, rent, phone, finance, etc.</small>
+              </div>
+
+              <div class="input-group">
+                <label for="variable">Variable cost per job</label>
+                <input id="variable" type="number" min="0" step="0.01" value="12" inputmode="decimal" />
+                <small class="help">Chemicals, disposables, fuel per job, wear &amp; tear estimate.</small>
+              </div>
+
+              <div class="input-group">
+                <label for="hoursPerJob">Hours per job</label>
+                <input id="hoursPerJob" type="number" min="0" step="0.1" value="2.5" inputmode="decimal" />
+                <small class="help">Average labour time per job.</small>
+              </div>
+
+              <div class="input-group">
+                <label for="jobsPerMonth">Jobs per month</label>
+                <input id="jobsPerMonth" type="number" min="0" step="1" value="20" inputmode="numeric" />
+                <small class="help">How many jobs you expect to complete this month.</small>
+              </div>
+
+              <div class="input-group">
+                <label for="targetProfit">Target profit per month</label>
+                <input id="targetProfit" type="number" min="0" step="0.01" value="0" inputmode="decimal" />
+                <small class="help">Optional. Added on top of covering costs.</small>
+              </div>
+
+              <div class="input-group">
+                <label for="targetHourly">Target hourly pay</label>
+                <input id="targetHourly" type="number" min="0" step="0.01" value="0" inputmode="decimal" />
+                <small class="help">Optional. Treated like wages you want to pay yourself.</small>
+              </div>
+
+              <div class="input-group">
+                <label for="priceWhatIf">What if I charge (per job)</label>
+                <input id="priceWhatIf" type="number" min="0" step="0.01" value="60" inputmode="decimal" />
+                <small class="help">Used for profit + “break-even jobs” modelling.</small>
+              </div>
             </div>
 
-            <div class="input-group">
-              <label for="fixed">Monthly fixed costs</label>
-              <input id="fixed" type="number" min="0" step="0.01" value="300" />
-              <small class="help">Insurance, unit rent, phone, software, finance, etc.</small>
-            </div>
-
-            <div class="input-group">
-              <label for="variable">Variable cost per job</label>
-              <input id="variable" type="number" min="0" step="0.01" value="12" />
-              <small class="help">Chemicals, towels wear, disposables, fuel (per job), etc.</small>
-            </div>
-
-            <div class="input-group">
-              <label for="hoursPerJob">Hours per job (avg)</label>
-              <input id="hoursPerJob" type="number" min="0" step="0.1" value="2.5" />
-              <small class="help">Your average labour time per job.</small>
-            </div>
-
-            <div class="input-group">
-              <label for="jobsPerMonth">Jobs per month (planned)</label>
-              <input id="jobsPerMonth" type="number" min="0" step="1" value="20" />
-              <small class="help">How many jobs you expect to do this month.</small>
-            </div>
-
-            <div class="input-group">
-              <label for="targetProfit">Target profit per month (optional)</label>
-              <input id="targetProfit" type="number" min="0" step="0.01" value="0" />
-              <small class="help">Extra profit on top of covering costs.</small>
-            </div>
-
-            <div class="input-group">
-              <label for="targetHourly">Target hourly pay (optional)</label>
-              <input id="targetHourly" type="number" min="0" step="0.01" value="0" />
-              <small class="help">If set, calculator adds wages into “required revenue”.</small>
-            </div>
-
-            <div class="input-group">
-              <label for="priceWhatIf">What if I charge per job…</label>
-              <input id="priceWhatIf" type="number" min="0" step="0.01" value="60" />
-              <small class="help">See profit and effective hourly at this price.</small>
+            <div class="form-actions">
+              <button type="button" class="btn" id="calc-btn">Calculate</button>
+              <button type="reset" class="btn btn--ghost" id="reset-btn">Reset</button>
             </div>
           </div>
 
-          <div class="form-actions">
-            <button type="button" class="btn" id="calc-btn">Calculate</button>
-            <button type="reset" class="btn btn--ghost" id="reset-btn">Reset</button>
-          </div>
+          <details class="tool-notes">
+            <summary>Notes (what's included)</summary>
+            <ul>
+              <li><strong>Fixed costs</strong> happen regardless of jobs (insurance, rent, subscriptions).</li>
+              <li><strong>Variable costs</strong> scale per job (chemicals, disposables, fuel estimate).</li>
+              <li><strong>Target hourly pay</strong> is converted to a monthly wage using <em>jobs x hours/job</em>.</li>
+              <li><strong>Required revenue</strong> = fixed + variable + target profit + wage (if set).</li>
+            </ul>
+          </details>
         </form>
 
-        <!-- Outputs -->
+        <!-- Results -->
         <aside class="tool-results" aria-live="polite">
           <h2 class="tool-card__subhead">Results</h2>
 
@@ -123,7 +142,7 @@
             <hr class="divider" />
 
             <div class="result">
-              <div class="result__label">At your chosen price</div>
+              <div class="result__label">Profit at your chosen price</div>
               <div class="result__value" id="profitAtPrice">—</div>
               <div class="result__hint muted" id="profitHint">—</div>
             </div>
@@ -131,32 +150,22 @@
             <div class="result">
               <div class="result__label">Effective hourly (after variable costs)</div>
               <div class="result__value" id="effectiveHourly">—</div>
-              <div class="result__hint muted">Excludes fixed costs unless you treat them as “wages”.</div>
+              <div class="result__hint muted">
+                Based on (price - variable) ÷ hours. Fixed costs are handled in monthly profit above.
+              </div>
             </div>
           </div>
 
-          <details class="tool-notes">
-            <summary>What this includes</summary>
-            <ul>
-              <li><strong>Fixed costs:</strong> paid once per month regardless of jobs done.</li>
-              <li><strong>Variable costs:</strong> scale with each job (consumables/fuel/etc.).</li>
-              <li><strong>Target hourly pay:</strong> converted into a monthly wage using (jobs/month × hours/job).</li>
-              <li><strong>Required revenue:</strong> fixed + (variable×jobs) + target profit + wage (if set).</li>
-            </ul>
-          </details>
+          <div class="callout muted" style="margin-top: 14px;">
+            <strong>Quick read:</strong> If “Break-even price per job” feels spicy, either increase volume,
+            reduce per-job cost, or simplify the service offering.
+          </div>
         </aside>
       </div>
     </section>
-
-    <section class="tool-card">
-      <h2 class="tool-card__subhead">Tip</h2>
-      <p class="muted">
-        If you offer multiple services (maintenance wash vs enhancement vs correction), run this with different
-        <em>hours per job</em> and <em>variable cost</em> assumptions, then save the numbers as presets later.
-      </p>
-    </section>
   </main>
 
+  <!-- Footer (match dilution/home theme) -->
   <footer class="site-footer">
     <div class="container">
       <p class="muted">© <span id="year"></span> Tool Suite • Built for GitHub Pages</p>
@@ -172,7 +181,6 @@
     }
 
     function fmtMoney(sym, value) {
-      // simple formatting without Intl to avoid locale surprises
       const sign = value < 0 ? "-" : "";
       const abs = Math.abs(value);
       return `${sign}${sym}${abs.toFixed(2)}`;
@@ -186,13 +194,13 @@
     function calculate() {
       const sym = ($("currency").value || "£").trim();
 
-      const fixed = n($("fixed").value);
-      const variable = n($("variable").value);
-      const hoursPerJob = n($("hoursPerJob").value);
+      const fixed        = n($("fixed").value);
+      const variable     = n($("variable").value);
+      const hoursPerJob  = n($("hoursPerJob").value);
       const jobsPerMonth = n($("jobsPerMonth").value);
       const targetProfit = n($("targetProfit").value);
       const targetHourly = n($("targetHourly").value);
-      const priceWhatIf = n($("priceWhatIf").value);
+      const priceWhatIf  = n($("priceWhatIf").value);
 
       const totalHoursMonth = jobsPerMonth * hoursPerJob;
       const wageMonth = targetHourly > 0 ? (targetHourly * totalHoursMonth) : 0;
@@ -203,13 +211,10 @@
         targetProfit +
         wageMonth;
 
-      // Break-even price per job (given jobsPerMonth)
-      const bePrice =
-        jobsPerMonth > 0 ? (requiredRevenue / jobsPerMonth) : NaN;
+      const bePrice = jobsPerMonth > 0 ? (requiredRevenue / jobsPerMonth) : NaN;
 
-      // Break-even jobs per month (given priceWhatIf)
-      // priceWhatIf * jobs >= fixed + variable*jobs + targetProfit + wageMonth
-      // (priceWhatIf - variable - (targetHourly*hoursPerJob if set)) * jobs >= fixed + targetProfit
+      // Break-even jobs per month at chosen price:
+      // (price - variable - wagePerJob) * jobs >= fixed + targetProfit
       const wagePerJob = targetHourly > 0 ? (targetHourly * hoursPerJob) : 0;
       const contributionPerJob = priceWhatIf - variable - wagePerJob;
 
@@ -218,15 +223,12 @@
         beJobs = (fixed + targetProfit) / contributionPerJob;
       }
 
-      // Profit at chosen price (using planned jobs/month)
       const revenueAtPrice = priceWhatIf * jobsPerMonth;
       const costAtPrice = fixed + (variable * jobsPerMonth) + wageMonth;
       const profitAtPrice = revenueAtPrice - costAtPrice;
 
-      // Effective hourly (after variable costs only)
       const marginPerJobBeforeFixed = priceWhatIf - variable;
-      const effectiveHourly =
-        hoursPerJob > 0 ? (marginPerJobBeforeFixed / hoursPerJob) : NaN;
+      const effectiveHourly = hoursPerJob > 0 ? (marginPerJobBeforeFixed / hoursPerJob) : NaN;
 
       // Render
       $("reqRevenue").textContent = fmtMoney(sym, requiredRevenue);
@@ -237,39 +239,27 @@
 
       $("bePrice").textContent = Number.isFinite(bePrice) ? fmtMoney(sym, bePrice) : "—";
 
-      $("beJobs").textContent =
-        Number.isFinite(beJobs)
-          ? `${Math.ceil(beJobs)} jobs/month (≈ ${fmtNum(beJobs)} exact)`
-          : "—";
-      // If contribution is <= 0, explain why
-      if (!(contributionPerJob > 0)) {
+      if (contributionPerJob > 0) {
+        $("beJobs").textContent = `${Math.ceil(beJobs)} jobs/month (≈ ${fmtNum(beJobs)} exact)`;
+      } else {
         $("beJobs").textContent = "Not possible (price too low vs costs/wage)";
       }
 
       $("profitAtPrice").textContent = fmtMoney(sym, profitAtPrice);
       $("profitHint").textContent =
         profitAtPrice >= 0
-          ? `After fixed + variable costs${targetHourly > 0 ? " + your wage target" : ""}, at ${jobsPerMonth} jobs/month.`
-          : `This is a loss at ${jobsPerMonth} jobs/month. Increase price, reduce costs, or increase volume.`;
+          ? `After fixed + variable${targetHourly > 0 ? " + your wage target" : ""}, at ${jobsPerMonth} jobs/month.`
+          : `Loss at ${jobsPerMonth} jobs/month. Increase price, reduce costs, or increase volume.`;
 
       $("effectiveHourly").textContent =
         Number.isFinite(effectiveHourly) ? `${fmtMoney(sym, effectiveHourly)}/hr` : "—";
     }
 
     $("calc-btn").addEventListener("click", calculate);
-    $("be-form").addEventListener("input", () => {
-      // live update, but keep it lightweight
-      calculate();
-    });
-
-    $("reset-btn").addEventListener("click", () => {
-      // allow the form reset to happen, then recalc
-      setTimeout(calculate, 0);
-    });
+    $("be-form").addEventListener("input", calculate);
+    $("reset-btn").addEventListener("click", () => setTimeout(calculate, 0));
 
     $("year").textContent = new Date().getFullYear();
-
-    // initial calc
     calculate();
   </script>
 </body>
