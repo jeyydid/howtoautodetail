@@ -48,28 +48,30 @@
       border-radius: var(--radius);
       display: none;
     }
-    .error {
-      margin-top: 0.9rem;
-      color: #dc2626;
-      font-weight: 700;
-      display: none;
-    }
     .result-row {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
       gap: 1rem;
-      padding: 0.35rem 0;
+      padding: 0.4rem 0;
       border-bottom: 1px solid rgba(229,231,235,0.8);
+      align-items: center;
     }
     .result-row:last-child {
       border-bottom: none;
+    }
+    .result-value {
+      font-weight: 900;
+      text-align: right;
     }
     .result-label {
       color: var(--muted);
       font-weight: 700;
     }
-    .result-value {
-      font-weight: 900;
+    .error {
+      margin-top: 0.9rem;
+      color: #dc2626;
+      font-weight: 700;
+      display: none;
     }
     .hint {
       margin: 0.35rem 0 0;
@@ -138,17 +140,24 @@
             <div class="error" id="error" aria-live="polite"></div>
 
             <div class="results" id="results" aria-live="polite">
+              <div class="result-row" style="font-weight:800;">
+                <div></div>
+                <div>Ratio</div>
+                <div>Factor</div>
+              </div>
+
               <div class="result-row">
                 <div class="result-label">Concentrate</div>
-                <div class="result-value"><span id="concentrate"></span> ml</div>
+                <div class="result-value"><span id="concentrate_ratio"></span> ml</div>
+                <div class="result-value"><span id="concentrate_factor"></span> ml</div>
               </div>
+
               <div class="result-row">
                 <div class="result-label">Water</div>
-                <div class="result-value"><span id="water"></span> ml</div>
+                <div class="result-value"><span id="water_ratio"></span> ml</div>
+                <div class="result-value"><span id="water_factor"></span> ml</div>
               </div>
             </div>
-          </div>
-        </div>
 
         <div class="card-footer">
           <span class="pill">No tracking • Offline-friendly</span>
@@ -204,8 +213,17 @@
       const concentrate = (partA / totalParts) * finalVolume;
       const water = finalVolume - concentrate;
 
-      document.getElementById("concentrate").textContent = concentrate.toFixed(2);
-      document.getElementById("water").textContent = water.toFixed(2);
+      // --- Factor method ---
+      const factorConcentrate = finalVolume / partB;
+      const factorWater = finalVolume - factorConcentrate;
+
+      // Populate Ratio column
+      document.getElementById("concentrate_ratio").textContent = concentrate.toFixed(2);
+      document.getElementById("water_ratio").textContent = water.toFixed(2);
+
+      // Populate Factor column (rounded to nearest whole ml)
+      document.getElementById("concentrate_factor").textContent = Math.round(factorConcentrate);
+      document.getElementById("water_factor").textContent = Math.round(factorWater);
 
       resultsEl.style.display = "block";
     }
