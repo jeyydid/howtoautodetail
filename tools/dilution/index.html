@@ -178,10 +178,24 @@
   </footer>
 
   <script>
-    // --- Calculator logic (UNCHANGED) ---
+    // Number formatter for inputs and outputs
+    const formatter = new Intl.NumberFormat("en-GB", {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
+    });
+
+    function formatNumber(value) {
+      return formatter.format(value);
+    }
+
+    function parseNumber(value) {
+      return parseFloat(value.replace(/,/g, ""));
+    }
+
+    // Calculator
     function calculateDilution() {
       const ratioInput = document.getElementById("ratio").value.trim();
-      const finalVolume = parseFloat(document.getElementById("finalVolume").value);
+      const finalVolume = parseNumber(document.getElementById("finalVolume").value);
 
       const errorEl = document.getElementById("error");
       const resultsEl = document.getElementById("results");
@@ -209,21 +223,28 @@
         return;
       }
 
+      // Ratio method
       const totalParts = partA + partB;
       const concentrate = (partA / totalParts) * finalVolume;
       const water = finalVolume - concentrate;
 
-      // --- Factor method ---
+      // Factor method
       const factorConcentrate = finalVolume / partB;
       const factorWater = finalVolume - factorConcentrate;
 
       // Populate Ratio column
-      document.getElementById("concentrate_ratio").textContent = concentrate.toFixed(2);
-      document.getElementById("water_ratio").textContent = water.toFixed(2);
+      document.getElementById("concentrate_ratio").textContent =
+        formatNumber(concentrate.toFixed(2));
 
-      // Populate Factor column (rounded to nearest whole ml)
-      document.getElementById("concentrate_factor").textContent = Math.round(factorConcentrate);
-      document.getElementById("water_factor").textContent = Math.round(factorWater);
+      document.getElementById("water_ratio").textContent =
+        formatNumber(water.toFixed(2));
+
+      // Populate Factor column
+      document.getElementById("concentrate_factor").textContent =
+        formatNumber(Math.round(factorConcentrate));
+
+      document.getElementById("water_factor").textContent =
+        formatNumber(Math.round(factorWater));
 
       resultsEl.style.display = "block";
     }
@@ -233,6 +254,13 @@
       errorEl.textContent = message;
       errorEl.style.display = "block";
     }
+
+    document.getElementById("finalVolume").addEventListener("input", function(e) {
+      const value = e.target.value.replace(/,/g, "");
+      if (!isNaN(value) && value !== "") {
+        e.target.value = formatNumber(value);
+      }
+    });
   </script>
 </body>
 </html>
