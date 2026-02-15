@@ -129,7 +129,7 @@
 
             <div>
               <label for="finalVolume">Final Volume (ml)</label>
-              <input type="number" id="finalVolume" placeholder="2500" min="1" inputmode="numeric" />
+              <input type="text" id="finalVolume" inputmode="numeric" pattern="[0-9,]*">
             </div>
 
             <div class="actions">
@@ -256,10 +256,15 @@
     }
 
     document.getElementById("finalVolume").addEventListener("input", function(e) {
-      const value = e.target.value.replace(/,/g, "");
-      if (!isNaN(value) && value !== "") {
-        e.target.value = formatNumber(value);
+      let raw = e.target.value.replace(/[^\d]/g, "");
+
+      if (raw === "") {
+        e.target.value = "";
+        return;
       }
+
+      const number = parseInt(raw, 10);
+      e.target.value = formatter.format(number);
     });
   </script>
 </body>
